@@ -11,15 +11,23 @@
     "build:npm": "tsup && node ./scripts/generateManifest.js generate --registry=npm && cp LICENSE ./dist/LICENSE",
     "deploy": "yarn --cwd ./dist npm publish"
   },
+  "dependencies": {
+    "@babel/generator": "7.27.5",
+    "@babel/parser": "7.27.5",
+    "@babel/traverse": "7.27.4",
+    "@babel/types": "7.27.6"
+  },
   "devDependencies": {
     "@swc/core": "1.7.42",
     "@types/react": "19.1.2",
     "react": ">=16.0.0",
+    "repacked": ">=1.1.6",
     "tsup": "8.3.5",
     "typescript": "^5.6.3",
     "yargs": "17.7.2"
   },
   "peerDependencies": {
-    "react": ">=16.0.0"
+    "react": ">=16.0.0",
+    "repacked": ">=1.1.6"
   }
 }
