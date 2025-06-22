@@ -1,4 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import {
+  Request as ExpressRequest,
+  Response as ExpressResponse,
+  NextFunction,
+} from "express";
 import {
   createStaticHandler,
   createStaticRouter,
@@ -10,7 +14,7 @@ import { renderToString } from "react-dom/server";
 
 const expressSSRMiddleware =
   (routes: RouteObject[]) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: ExpressRequest, res: ExpressResponse, next: NextFunction) => {
     if (/^(?!.*\.\w+$).+$/.test(req.path) && !req.path.startsWith("/__")) {
       const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
       const fetchRequest = createFetchRequest(req, res);
