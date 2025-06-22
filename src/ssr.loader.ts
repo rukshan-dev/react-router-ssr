@@ -1,6 +1,6 @@
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
-import t from "@babel/types";
+import * as t from "@babel/types";
 
 export default (source: string) => {
   const ast = parse(source, {
