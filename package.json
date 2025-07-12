@@ -1,6 +1,6 @@
 {
   "name": "@repacked-tools/react-router-ssr",
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "main": "index.js",
   "repository": "git@github.com:rukshan-dev/react-router-ssr.git",
   "author": "Rukshan Fernando<hello@rukshan.dev>",
