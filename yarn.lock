@@ -1235,7 +1235,7 @@ __metadata:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"
     react-router: ">=7.6.2"
-    repacked: ">=1.1.6"
+    repacked: ">=1.1.10"
   languageName: unknown
   linkType: soft
 
