@@ -11,9 +11,11 @@ import {
 } from "react-router";
 import createFetchRequest from "./createFetchRequest";
 import { renderToString } from "react-dom/server";
+import { RuntimeConfigs } from "repacked";
+import { AssetsProvider } from "../scripts";
 
 const expressSSRMiddleware =
-  (routes: RouteObject[]) =>
+  (routes: RouteObject[], config: RuntimeConfigs) =>
   async (req: ExpressRequest, res: ExpressResponse, next: NextFunction) => {
     if (/^(?!.*\.\w+$).+$/.test(req.path) && !req.path.startsWith("/__")) {
       const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
@@ -32,9 +34,12 @@ const expressSSRMiddleware =
       }
 
       let router = createStaticRouter(dataRoutes, context);
+      const assets = await config.getClientManifest();
       res.send(
         renderToString(
-          <StaticRouterProvider router={router} context={context} />
+          <AssetsProvider assets={assets}>
+            <StaticRouterProvider router={router} context={context} />
+          </AssetsProvider>
         )
       );
       return;

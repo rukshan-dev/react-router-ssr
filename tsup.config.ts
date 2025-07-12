@@ -8,6 +8,6 @@ export default defineConfig([
     clean: true,
     dts: true,
     outDir: "./dist",
-    external: ["express", "react-router", "virtual:repacked/server"],
+    external: ["react","react-dom","express", "react-router", "virtual:repacked/server"],
   },
 ]);
