@@ -166,7 +166,7 @@ export default (source: string) => {
       Accept: "application/json",
     },
   });
-  const serializedResponse = response.headers.get('x-serialized-response');
+  const serializedResponse = res.headers.get('x-serialized-response');
   if(serializedResponse){
   const json = await res.json();
   return jsonToResponse(json);

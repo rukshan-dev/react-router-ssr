@@ -43,7 +43,7 @@ const expressSSRMiddleware =
         });
         if (data instanceof Response) {
           res.set("x-serialized-response", "true");
-          res.send(responseToJson(data));
+          res.send(await responseToJson(data));
           return;
         }
         res.send(data);
