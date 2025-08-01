@@ -13,9 +13,17 @@ import createFetchRequest from "./createFetchRequest";
 import { renderToString } from "react-dom/server";
 import { RuntimeConfigs } from "repacked";
 import { AssetsProvider } from "../scripts";
+import { convertResponseToExpress, responseToJson } from "./responses";
 
 type Options = {
   requestContext: unknown;
+};
+
+type SerializableResponse = {
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  body: string;
 };
 
 const expressSSRMiddleware =
@@ -34,7 +42,9 @@ const expressSSRMiddleware =
           requestContext: options.requestContext,
         });
         if (data instanceof Response) {
-          throw data;
+          res.set("x-serialized-response", "true");
+          res.send(responseToJson(data));
+          return;
         }
         res.send(data);
         return;
@@ -45,7 +55,7 @@ const expressSSRMiddleware =
       });
 
       if (context instanceof Response) {
-        throw context;
+        return await convertResponseToExpress(context, res);
       }
 
       let router = createStaticRouter(dataRoutes, context);

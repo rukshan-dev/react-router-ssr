@@ -143,6 +143,17 @@ export default (source: string) => {
   }
 
   return `
+
+  const jsonToResponse = async (
+    json
+  ) => {
+    return new Response(json.body, {
+      status: json.status,
+      statusText: json.statusText,
+      headers: json.headers,
+    });
+  };
+
   const __internal__custom__server_fn = async ({request}) => {
   const method = request.method;
   console.debug('loading data from server')
@@ -155,6 +166,11 @@ export default (source: string) => {
       Accept: "application/json",
     },
   });
+  const serializedResponse = response.headers.get('x-serialized-response');
+  if(serializedResponse){
+  const json = await res.json();
+  return jsonToResponse(json);
+  }
   return res.json();
   }
   ${namedExports
