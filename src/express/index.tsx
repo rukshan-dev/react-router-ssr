@@ -14,8 +14,16 @@ import { renderToString } from "react-dom/server";
 import { RuntimeConfigs } from "repacked";
 import { AssetsProvider } from "../scripts";
 
+type Options = {
+  requestContext: unknown;
+};
+
 const expressSSRMiddleware =
-  (routes: RouteObject[], config: RuntimeConfigs) =>
+  (
+    routes: RouteObject[],
+    config: RuntimeConfigs,
+    options: Partial<Options> = {}
+  ) =>
   async (req: ExpressRequest, res: ExpressResponse, next: NextFunction) => {
     if (/^(?!.*\.\w+$).+$/.test(req.path) && !req.path.startsWith("/__")) {
       const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
@@ -27,7 +35,9 @@ const expressSSRMiddleware =
         return;
       }
 
-      let context = await query(fetchRequest);
+      let context = await query(fetchRequest, {
+        requestContext: options.requestContext,
+      });
 
       if (context instanceof Response) {
         throw context;
