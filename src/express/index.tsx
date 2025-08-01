@@ -33,6 +33,9 @@ const expressSSRMiddleware =
         const data = await queryRoute(fetchRequest, {
           requestContext: options.requestContext,
         });
+        if (data instanceof Response) {
+          throw data;
+        }
         res.send(data);
         return;
       }
