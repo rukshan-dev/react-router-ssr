@@ -30,7 +30,9 @@ const expressSSRMiddleware =
       const fetchRequest = createFetchRequest(req, res);
 
       if (req.headers.accept?.toLowerCase() === "application/json") {
-        const data = await queryRoute(fetchRequest);
+        const data = await queryRoute(fetchRequest, {
+          requestContext: options.requestContext,
+        });
         res.send(data);
         return;
       }
